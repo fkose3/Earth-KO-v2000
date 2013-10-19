@@ -20,30 +20,27 @@ CMagicTableSet::CMagicTableSet(CDatabase* pdb)
 	: CRecordset(pdb)
 {
 	//{{AFX_FIELD_INIT(CMagicTableSet)
-	m_MagicNum = 0;
-	m_EnName = _T("");
-	m_KrName = _T("");
-	m_Description = _T("");
-	m_BeforeAction = 0;
-	m_TargetAction = 0;
-	m_SelfEffect = 0;
-	m_FlyingEffect = 0;
-	m_TargetEffect = 0;
-	m_Moral = 0;
-	m_SkillLevel = 0;
-	m_Skill = 0;
-	m_Msp = 0;
-	m_HP = 0;
-	m_ItemGroup = 0;
-	m_UseItem = 0;
-	m_CastTime = 0;
-	m_ReCastTime = 0;
-	m_SuccessRate = 0;
-	m_Type1 = 0;
-	m_Type2 = 0;
-	m_Range = 0;
-	m_Etc = 0;
-	m_nFields = 23;
+	iNum = 0;
+	nBeforeAction = 0;
+	bTargetAction = 0;
+	bSelfEffect = 0;
+	bFlyingEffect = 0;
+	iTargetEffect = 0;
+	bMoral = 0;
+	sSkillLevel = 0;	
+	sSkill = 0;
+	sMsp = 0;
+	sHP = 0;
+	bItemGroup = 0;
+	iUseItem = 0;
+	bCastTime = 0;
+	sReCastTime = 0;
+	bSuccessRate = 0;
+	bType1 = 0;
+	bType2 = 0;
+	sRange = 0;
+	sEtc = 0;
+	m_nFields = 20;
 	//}}AFX_FIELD_INIT
 	m_nDefaultType = snapshot;
 }
@@ -63,29 +60,26 @@ void CMagicTableSet::DoFieldExchange(CFieldExchange* pFX)
 {
 	//{{AFX_FIELD_MAP(CMagicTableSet)
 	pFX->SetFieldType(CFieldExchange::outputColumn);
-	RFX_Long(pFX, _T("[MagicNum]"), m_MagicNum);
-	RFX_Text(pFX, _T("[EnName]"), m_EnName);
-	RFX_Text(pFX, _T("[KrName]"), m_KrName);
-	RFX_Text(pFX, _T("[Description]"), m_Description);
-	RFX_Byte(pFX, _T("[BeforeAction]"), m_BeforeAction);
-	RFX_Byte(pFX, _T("[TargetAction]"), m_TargetAction);
-	RFX_Byte(pFX, _T("[SelfEffect]"), m_SelfEffect);
-	RFX_Byte(pFX, _T("[FlyingEffect]"), m_FlyingEffect);
-	RFX_Int(pFX, _T("[TargetEffect]"), m_TargetEffect);
-	RFX_Byte(pFX, _T("[Moral]"), m_Moral);
-	RFX_Int(pFX, _T("[SkillLevel]"), m_SkillLevel);
-	RFX_Int(pFX, _T("[Skill]"), m_Skill);
-	RFX_Int(pFX, _T("[Msp]"), m_Msp);
-	RFX_Int(pFX, _T("[HP]"), m_HP);
-	RFX_Byte(pFX, _T("[ItemGroup]"), m_ItemGroup);
-	RFX_Long(pFX, _T("[UseItem]"), m_UseItem);
-	RFX_Byte(pFX, _T("[CastTime]"), m_CastTime);
-	RFX_Byte(pFX, _T("[ReCastTime]"), m_ReCastTime);
-	RFX_Byte(pFX, _T("[SuccessRate]"), m_SuccessRate);
-	RFX_Byte(pFX, _T("[Type1]"), m_Type1);
-	RFX_Byte(pFX, _T("[Type2]"), m_Type2);
-	RFX_Int(pFX, _T("[Range]"), m_Range);
-	RFX_Byte(pFX, _T("[Etc]"), m_Etc);
+	RFX_Long(pFX, _T("[MagicNum]"), iNum);
+	RFX_Int(pFX, _T("[BeforeAction]"), nBeforeAction);
+	RFX_Byte(pFX, _T("[TargetAction]"), bTargetAction);
+	RFX_Byte(pFX, _T("[SelfEffect]"), bSelfEffect);
+	RFX_Byte(pFX, _T("[FlyingEffect]"), bFlyingEffect);
+	RFX_Long(pFX, _T("[TargetEffect]"), iTargetEffect);
+	RFX_Byte(pFX, _T("[Moral]"), bMoral);
+	RFX_Int(pFX, _T("[SkillLevel]"), sSkillLevel);
+	RFX_Int(pFX, _T("[Skill]"), sSkill);
+	RFX_Int(pFX, _T("[Msp]"), sMsp);
+	RFX_Int(pFX, _T("[HP]"), sHP);
+	RFX_Byte(pFX, _T("[ItemGroup]"), bItemGroup);
+	RFX_Long(pFX, _T("[UseItem]"), iUseItem);
+	RFX_Byte(pFX, _T("[CastTime]"), bCastTime);
+	RFX_Int(pFX, _T("[ReCastTime]"), sReCastTime);
+	RFX_Byte(pFX, _T("[SuccessRate]"), bSuccessRate);
+	RFX_Byte(pFX, _T("[Type1]"), bType1);
+	RFX_Byte(pFX, _T("[Type2]"), bType2);
+	RFX_Int(pFX, _T("[Range]"), sRange);
+	RFX_Int(pFX, _T("[Etc]"), sEtc);
 	//}}AFX_FIELD_MAP
 }
 

@@ -18,29 +18,26 @@ public:
 
 // Field/Param Data
 	//{{AFX_FIELD(CMagicTableSet, CRecordset)
-	long	m_MagicNum;
-	CString	m_EnName;
-	CString	m_KrName;
-	CString	m_Description;
-	BYTE	m_BeforeAction;
-	BYTE	m_TargetAction;
-	BYTE	m_SelfEffect;
-	BYTE	m_FlyingEffect;
-	int		m_TargetEffect;
-	BYTE	m_Moral;
-	int		m_SkillLevel;
-	int		m_Skill;
-	int		m_Msp;
-	int     m_HP;
-	BYTE	m_ItemGroup;
-	long	m_UseItem;
-	BYTE	m_CastTime;
-	BYTE	m_ReCastTime;
-	BYTE	m_SuccessRate;
-	BYTE	m_Type1;
-	BYTE	m_Type2;
-	int     m_Range;
-	BYTE	m_Etc;
+	long	iNum;
+	int 	nBeforeAction;
+	BYTE	bTargetAction;
+	BYTE	bSelfEffect;
+	BYTE	bFlyingEffect;
+	long 	iTargetEffect;
+	BYTE	bMoral;
+	int 	sSkillLevel;	
+	int 	sSkill;
+	int 	sMsp;
+	int 	sHP;
+	BYTE	bItemGroup;
+	long 	iUseItem;
+	BYTE	bCastTime;
+	int 	sReCastTime;
+	BYTE	bSuccessRate;
+	BYTE	bType1;
+	BYTE	bType2;
+	int 	sRange;
+	int 	sEtc;
 	//}}AFX_FIELD
 
 

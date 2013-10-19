@@ -6,13 +6,13 @@
 --------------------Configuration: Ebenezer - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\KOSE\AppData\Local\Temp\RSPE957.tmp" with contents
+Creating temporary file "C:\Users\KOSE\AppData\Local\Temp\RSP7138.tmp" with contents
 [
 /nologo /MTd /W3 /Gm /GX /ZI /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_3DSERVER" /FR"Debug/" /Fp"Debug/Ebenezer.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
 "D:\KO\KOProject\Ko-19xx-Project-ByKOSE\Ebenezer\EbenezerDlg.cpp"
 ]
-Creating command line "cl.exe @C:\Users\KOSE\AppData\Local\Temp\RSPE957.tmp" 
-Creating temporary file "C:\Users\KOSE\AppData\Local\Temp\RSPE958.tmp" with contents
+Creating command line "cl.exe @C:\Users\KOSE\AppData\Local\Temp\RSP7138.tmp" 
+Creating temporary file "C:\Users\KOSE\AppData\Local\Temp\RSP7139.tmp" with contents
 [
 ws2_32.lib Implode.lib winmm.lib d3d8.lib d3dx8.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/Ebenezer.pdb" /map:"Debug/Ebenezer.map" /debug /machine:I386 /out:"Debug/Ebenezer.exe" /pdbtype:sept 
 ".\Debug\AISocket.obj"
@@ -58,8 +58,11 @@ ws2_32.lib Implode.lib winmm.lib d3d8.lib d3dx8.lib /nologo /subsystem:windows /
 ".\Debug\N3ShapeMgr.obj"
 ".\Debug\Ebenezer.res"
 ".\JvCryption.lib"
+".\Debug\MaigcType6Set.obj"
+".\Debug\MagicType9Set.obj"
+".\Debug\MagicType7Set.obj"
 ]
-Creating command line "link.exe @C:\Users\KOSE\AppData\Local\Temp\RSPE958.tmp"
+Creating command line "link.exe @C:\Users\KOSE\AppData\Local\Temp\RSP7139.tmp"
 <h3>Output Window</h3>
 Compiling...
 EbenezerDlg.cpp

@@ -21,14 +21,12 @@ CMagicType2Set::CMagicType2Set(CDatabase* pdb)
 {
 	//{{AFX_FIELD_INIT(CMagicType2Set)
 	m_iNum = 0;
-	m_Name = _T("");
-	m_Description = _T("");
 	m_HitType = 0;
 	m_HitRate = 0;
 	m_AddDamage = 0;
 	m_AddRange = 0;
 	m_NeedArrow = 0;
-	m_nFields = 8;
+	m_nFields = 6;
 	//}}AFX_FIELD_INIT
 	m_nDefaultType = snapshot;
 }
@@ -49,8 +47,6 @@ void CMagicType2Set::DoFieldExchange(CFieldExchange* pFX)
 	//{{AFX_FIELD_MAP(CMagicType2Set)
 	pFX->SetFieldType(CFieldExchange::outputColumn);
 	RFX_Long(pFX, _T("[iNum]"), m_iNum);
-	RFX_Text(pFX, _T("[Name]"), m_Name);
-	RFX_Text(pFX, _T("[Description]"), m_Description);
 	RFX_Byte(pFX, _T("[HitType]"), m_HitType);
 	RFX_Int(pFX, _T("[HitRate]"), m_HitRate);
 	RFX_Int(pFX, _T("[AddDamage]"), m_AddDamage);

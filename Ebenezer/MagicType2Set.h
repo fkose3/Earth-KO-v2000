@@ -19,8 +19,6 @@ public:
 // Field/Param Data
 	//{{AFX_FIELD(CMagicType2Set, CRecordset)
 	long	m_iNum;
-	CString	m_Name;
-	CString	m_Description;
 	BYTE	m_HitType;
 	int		m_HitRate;
 	int		m_AddDamage;

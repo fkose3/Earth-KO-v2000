@@ -120,7 +120,7 @@ void CMagicProcess::MagicPacket(char *pBuf, int len)
 	}
 
 	if (tid >= 0 && tid < MAX_USER) {	// Type 4 Repeat Check!!!
-		if (pMagic->bType1 == 4) {
+		if (pMagic->bType[0] == 4) {
 			if (pMagic->bMoral < 5) {
 				CUser* pTUser;
 				pTUser = (CUser*)m_pMain->m_Iocport.m_SockArray[tid] ;
@@ -157,7 +157,7 @@ void CMagicProcess::MagicPacket(char *pBuf, int len)
 	}
 	
 	if (tid >= 0 && tid < MAX_USER) {		// Type 3 Repeat Check!!!
-		if (pMagic->bType1 == 3) {
+		if (pMagic->bType[0] == 3) {
 			if (pMagic->bMoral < 5) {
 				CUser* pTUser;
 				pTUser = (CUser*)m_pMain->m_Iocport.m_SockArray[tid] ;
@@ -201,7 +201,7 @@ void CMagicProcess::MagicPacket(char *pBuf, int len)
 	if (sid >= 0 && sid < MAX_USER) {	// Make sure the source is a user!
 		if (m_pSrcUser->m_pUserData->m_bZone == ZONE_BATTLE) {		// Make sure the zone is a battlezone!
 			if (tid >= 0 && tid < MAX_USER) {		// Make sure the target is another player.
-				if (pMagic->bType1 == 8) {		// Is it a warp spell?
+				if (pMagic->bType[0] == 8) {		// Is it a warp spell?
 					if (pMagic->bMoral < 5 || pMagic->bMoral == MORAL_CLAN) {		
 						float currenttime;
 						currenttime = TimeGet();
@@ -242,13 +242,13 @@ void CMagicProcess::MagicPacket(char *pBuf, int len)
 		goto return_echo;
 	
 	if ( command == MAGIC_FLYING ) {	// When the arrow starts flying....
-	 	if (pMagic->bType1 == 2) {
+	 	if (pMagic->bType[0] == 2) {
 			_MAGIC_TYPE2* pType = NULL;
 			pType = m_pMain->m_Magictype2Array.GetData( magicid );     // Get magic skill table type 2.
 			if( !pType ) return;
 
 			if (sid >= 0 && sid < MAX_USER)	{	// If the PLAYER shoots an arrow.
-				if (pMagic->sFlyingEffect > 0) {	// Only if Flying Effect is greater than 0.			
+				if (pMagic->bFlyingEffect > 0) {	// Only if Flying Effect is greater than 0.			
 					int total_hit = m_pSrcUser->m_sTotalHit + m_pSrcUser->m_sItemHit ;
 					int skill_mana = total_hit * pMagic->sMsp / 100 ;
 
@@ -300,7 +300,7 @@ void CMagicProcess::MagicPacket(char *pBuf, int len)
 //						total_magic_damage += pRightHand->m_sDamage ;
 //						total_magic_damage += ((pRightHand->m_sDamage * 0.8f)+ (pRightHand->m_sDamage * m_pSrcUser->m_pUserData->m_bLevel) / 60);
 
-						if (pMagic->bType1 == 3) {
+						if (pMagic->bType[0] == 3) {
 //
 							total_magic_damage += ((pRightHand->m_sDamage * 0.8f)+ (pRightHand->m_sDamage * m_pSrcUser->m_pUserData->m_bLevel) / 60);
 //
@@ -335,7 +335,7 @@ void CMagicProcess::MagicPacket(char *pBuf, int len)
 
 		if (tid < -1 || tid >= MAX_USER) return;	// Make sure the target is another player and it exists.
 
-		switch( pTable->bType1 ) {
+		switch( pTable->bType[0] ) {
 			case 1:
 				initial_result = ExecuteType1( pTable->iNum, sid, tid, data1, data2, data3 );
 				break;
@@ -369,7 +369,7 @@ void CMagicProcess::MagicPacket(char *pBuf, int len)
 		}
 
 		if (initial_result != 0) {
-			switch( pTable->bType2 ) {
+			switch( pTable->bType[1] ) {
 				case 1:
 					ExecuteType1( pTable->iNum, sid, tid, data1, data2, data3 );
 					break;
@@ -462,12 +462,12 @@ _MAGIC_TABLE* CMagicProcess::IsAvailable(int magicid, int tid, int sid, BYTE typ
 	if( tid >= 0 && tid < MAX_USER ) {		// Target existence check routine for player.          
 		pUser = (CUser*)m_pMain->m_Iocport.m_SockArray[tid];
 
-		if (pTable->bType1 != 5) {		// If not a Warp/Resurrection spell...
+		if (pTable->bType[0] != 5) {		// If not a Warp/Resurrection spell...
 			if( !pUser || pUser->m_bResHpType == USER_DEAD || pUser->m_bAbnormalType == ABNORMAL_BLINKING) {
 				goto fail_return;
 			}
 		}
-		else if (pTable->bType1 == 5) {
+		else if (pTable->bType[0] = 5) {
 			pType = m_pMain->m_Magictype5Array.GetData(magicid);    
 			if (!pType) goto fail_return;
 			if (!pUser) goto fail_return;	
@@ -617,11 +617,11 @@ _MAGIC_TABLE* CMagicProcess::IsAvailable(int magicid, int tid, int sid, BYTE typ
 		if( modulator != 0 ) {	
 			Class = pTable->sSkill / 10;
 			if( Class != m_pSrcUser->m_pUserData->m_sClass ) goto fail_return;
-			if( pTable->bSkillLevel > m_pSrcUser->m_pUserData->m_bstrSkill[modulator] ) goto fail_return;
+			if( pTable->sSkillLevel > m_pSrcUser->m_pUserData->m_bstrSkill[modulator] ) goto fail_return;
 		}
-		else if( pTable->bSkillLevel > m_pSrcUser->m_pUserData->m_bLevel ) goto fail_return;
+		else if( pTable->sSkillLevel > m_pSrcUser->m_pUserData->m_bLevel ) goto fail_return;
 
-		if (pTable->bType1 == 1) {	// Weapons verification in case of COMBO attack (another hacking prevention).
+		if (pTable->bType[0] == 1) {	// Weapons verification in case of COMBO attack (another hacking prevention).
 			if (pTable->sSkill == 1055 || pTable->sSkill == 2055) {		// Weapons verification in case of DUAL ATTACK (type 1)!		
 				_ITEM_TABLE* pLeftHand = NULL;		// Get item info for left hand.
 				pLeftHand = m_pMain->m_ItemtableArray.GetData(m_pSrcUser->m_pUserData->m_sItemArray[LEFTHAND].nNum);
@@ -655,17 +655,17 @@ _MAGIC_TABLE* CMagicProcess::IsAvailable(int magicid, int tid, int sid, BYTE typ
 			int total_hit = m_pSrcUser->m_sTotalHit ;
 			int skill_mana = (pTable->sMsp * total_hit) / 100 ; 
 
-			if ( pTable->bType1 == 2 && pTable->sFlyingEffect != 0) {		// Type 2 related...
+			if ( pTable->bType[0] == 2 && pTable->bFlyingEffect != 0) {		// Type 2 related...
 				m_bMagicState = NONE;
 				return pTable;		// Do not reduce MP/SP when flying effect is not 0.
 			}
 
-			if ( pTable->bType1 == 1 && data1 > 1) {
+			if ( pTable->bType[0] == 1 && data1 > 1) {
 				m_bMagicState = NONE;
 				return pTable;		// Do not reduce MP/SP when combo number is higher than 0.
 			}
  
-			if( pTable->bType1 == 1 || pTable->bType1 == 2 ) {
+			if( pTable->bType[0] == 1 || pTable->bType[0] == 2 ) {
 				if( skill_mana > m_pSrcUser->m_pUserData->m_sMp )
 					goto fail_return;
 			}
@@ -686,7 +686,7 @@ _MAGIC_TABLE* CMagicProcess::IsAvailable(int magicid, int tid, int sid, BYTE typ
 				m_pSrcUser->HpChange(-pTable->sHP);
 			}
 */
-			if (pTable->bType1 == 3 || pTable->bType1 == 4) {   // If the PLAYER uses an item to cast a spell.
+			if (pTable->bType[0] == 3 || pTable->bType[0] == 4) {   // If the PLAYER uses an item to cast a spell.
 				if (sid >= 0 && sid < MAX_USER)	{	
 					if (pTable->iUseItem != 0) {
 //	이것두 성래씨 요청에 의해 하는 짓입니다 --;
@@ -723,7 +723,7 @@ _MAGIC_TABLE* CMagicProcess::IsAvailable(int magicid, int tid, int sid, BYTE typ
 				}
 			}
 			
-			if (pTable->bType1 == 5) {
+			if (pTable->bType[0] == 5) {
 				if (tid >= 0 && tid < MAX_USER)	{	
 					if (pTable->iUseItem != 0) {					
 						pType = m_pMain->m_Magictype5Array.GetData(magicid);    
@@ -754,10 +754,10 @@ _MAGIC_TABLE* CMagicProcess::IsAvailable(int magicid, int tid, int sid, BYTE typ
 				}
 			}
 //
-			if ( pTable->bType1 == 1 || pTable->bType1 == 2 ) {	// Actual deduction of Skill or Magic point.
+			if ( pTable->bType[0] == 1 || pTable->bType[0] == 2 ) {	// Actual deduction of Skill or Magic point.
 				m_pSrcUser->MSpChange( -(skill_mana) ) ;
 			}	
-			else if (pTable->bType1 != 4 || (pTable->bType1 == 4 && tid == -1)) {
+			else if (pTable->bType[0] != 4 || (pTable->bType[0] == 4 && tid == -1)) {
 				m_pSrcUser->MSpChange( -(pTable->sMsp) );
 			}
 
@@ -868,7 +868,7 @@ BYTE CMagicProcess::ExecuteType1(int magicid, int sid, int tid, int data1, int d
 	m_pSrcUser->SendTargetHP( 0, tid, -damage );     // Change the HP of the target.
 
 packet_send:
-	if (pMagic->bType2 == 0 || pMagic->bType2 == 1) {
+	if (pMagic->bType[1] == 0 || pMagic->bType[1] == 1) {
 		SetByte( send_buff, WIZ_MAGIC_PROCESS, send_index );
 		SetByte( send_buff, MAGIC_EFFECTING, send_index );
 		SetDWORD( send_buff, magicid, send_index );
@@ -975,7 +975,7 @@ BYTE CMagicProcess::ExecuteType2(int magicid, int sid, int tid, int data1, int d
 	m_pSrcUser->SendTargetHP( 0, tid, -damage );     // Change the HP of the target.
 
 packet_send:
-	if ( pMagic->bType2 == 0 || pMagic->bType2 == 2) {
+	if ( pMagic->bType[1] == 0 || pMagic->bType[1] == 2) {
 		SetByte( send_buff, WIZ_MAGIC_PROCESS, send_index );
 		SetByte( send_buff, MAGIC_EFFECTING, send_index );
 		SetDWORD( send_buff, magicid, send_index ); 
@@ -1258,7 +1258,7 @@ void CMagicProcess::ExecuteType3(int magicid, int sid, int tid, int data1, int d
 		} 
 	
 	packet_send:
-		if ( pMagic->bType2 == 0 || pMagic->bType2 == 3 ) {
+		if ( pMagic->bType[1] == 0 || pMagic->bType[1] == 3 ) {
 			SetByte( send_buff, WIZ_MAGIC_PROCESS, send_index );
 			SetByte( send_buff, MAGIC_EFFECTING, send_index );
 			SetDWORD( send_buff, magicid, send_index );
@@ -1448,7 +1448,7 @@ void CMagicProcess::ExecuteType4(int magicid, int sid, int tid, int data1, int d
 				goto fail_return;
 		}
 
-		if (tid != -1 && pMagic->bType1 == 4) {
+		if (tid != -1 && pMagic->bType[0] == 4) {
 // 비러머글 하피 >.<
 			if (sid >= 0 && sid < MAX_USER) {
 //
@@ -1487,7 +1487,7 @@ void CMagicProcess::ExecuteType4(int magicid, int sid, int tid, int data1, int d
 //	
 		pTUser->Send2AI_UserUpdateInfo();	// AI Server에 바끤 데이타 전송....
 
-		if ( pMagic->bType2 == 0 || pMagic->bType2 == 4 ) {
+		if ( pMagic->bType[1] == 0 || pMagic->bType[1] == 4 ) {
 			SetByte( send_buff, WIZ_MAGIC_PROCESS, send_index );
 			SetByte( send_buff, MAGIC_EFFECTING, send_index );
 			SetDWORD( send_buff, magicid, send_index );
@@ -1509,7 +1509,7 @@ void CMagicProcess::ExecuteType4(int magicid, int sid, int tid, int data1, int d
 		continue; 
 
 	fail_return:
-		if ( pMagic->bType2 == 4 ) {
+		if ( pMagic->bType[1] == 4 ) {
 			SetByte( send_buff, WIZ_MAGIC_PROCESS, send_index );
 			SetByte( send_buff, MAGIC_EFFECTING, send_index );
 			SetDWORD( send_buff, magicid, send_index );
@@ -1798,7 +1798,7 @@ void CMagicProcess::ExecuteType5(int magicid, int sid, int tid, int data1, int d
 			break;
 	}
 
-	if ( pMagic->bType2 == 0 || pMagic->bType2 == 5) {		   // In case of success!!!
+	if ( pMagic->bType[1] == 0 || pMagic->bType[1] == 5) {		   // In case of success!!!
 		memset( send_buff, NULL, 128); send_index = 0;
 		SetByte( send_buff, WIZ_MAGIC_PROCESS, send_index );
 		SetByte( send_buff, MAGIC_EFFECTING, send_index );
@@ -2415,10 +2415,10 @@ BOOL CMagicProcess::UserRegionCheck(int sid, int tid, int magicid, int radius, s
 				}
 			}			
 
-			if ( pTUser->m_sPartyIndex == m_pSrcUser->m_sPartyIndex && pMagic->bType1 != 8 ) {
+			if ( pTUser->m_sPartyIndex == m_pSrcUser->m_sPartyIndex && pMagic->bType[0] != 8 ) {
 				goto final_test;
 			}
-			else if (pTUser->m_sPartyIndex == m_pSrcUser->m_sPartyIndex && pMagic->bType1 == 8) {
+			else if (pTUser->m_sPartyIndex == m_pSrcUser->m_sPartyIndex && pMagic->bType[0] == 8) {
 				currenttime = TimeGet();
 				if (pTUser->m_pUserData->m_bZone == ZONE_BATTLE && (currenttime - pTUser->m_fLastRegeneTime < CLAN_SUMMON_TIME)) {
 					return FALSE;
@@ -2460,10 +2460,10 @@ BOOL CMagicProcess::UserRegionCheck(int sid, int tid, int magicid, int radius, s
 			if ( pTUser->m_pUserData->m_bKnights == m_pSrcUser->m_pUserData->m_bKnights) 
 				goto final_test;
 */
-			if ( pTUser->m_pUserData->m_bKnights == m_pSrcUser->m_pUserData->m_bKnights && pMagic->bType1 != 8 ) {
+			if ( pTUser->m_pUserData->m_bKnights == m_pSrcUser->m_pUserData->m_bKnights && pMagic->bType[0] != 8 ) {
 				goto final_test;
 			}
-			else if (pTUser->m_pUserData->m_bKnights == m_pSrcUser->m_pUserData->m_bKnights && pMagic->bType1 == 8) {
+			else if (pTUser->m_pUserData->m_bKnights == m_pSrcUser->m_pUserData->m_bKnights && pMagic->bType[0] == 8) {
 				currenttime = TimeGet();
 				if (pTUser->m_pUserData->m_bZone == ZONE_BATTLE && (currenttime - pTUser->m_fLastRegeneTime < CLAN_SUMMON_TIME)) {
 					return FALSE;

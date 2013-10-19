@@ -19,8 +19,6 @@ public:
 // Field/Param Data
 	//{{AFX_FIELD(CMagicType3Set, CRecordset)
 	long	m_iNum;
-	CString	m_Name;
-	CString	m_Description;
 	BYTE	m_Radius;
 	int		m_Angle;
 	BYTE	m_DirectType;

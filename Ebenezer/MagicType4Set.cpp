@@ -21,16 +21,19 @@ CMagicType4Set::CMagicType4Set(CDatabase* pdb)
 {
 	//{{AFX_FIELD_INIT(CMagicType4Set)
 	m_iNum = 0;
-	m_Name = _T("");
-	m_Description = _T("");
 	m_BuffType = 0;
 	m_Radius = 0;
 	m_Duration = 0;
 	m_AttackSpeed = 0;
 	m_Speed = 0;
 	m_AC = 0;
+	m_ACPct = 0;
 	m_Attack = 0;
+	m_MagicAttack = 0;
 	m_MaxHP = 0;
+	m_MaxHPPct = 0;
+	m_MaxMP = 0;
+	m_MaxMPPct = 0;
 	m_HitRate = 0;
 	m_AvoidRate = 0;
 	m_Str = 0;
@@ -44,7 +47,9 @@ CMagicType4Set::CMagicType4Set(CDatabase* pdb)
 	m_MagicR = 0;
 	m_DiseaseR = 0;
 	m_PoisonR = 0;
-	m_nFields = 24;
+	m_ExpPct = 0;
+	m_SpecialAmount = 0;
+	m_nFields = 29;
 	//}}AFX_FIELD_INIT
 	m_nDefaultType = snapshot;
 }
@@ -65,16 +70,19 @@ void CMagicType4Set::DoFieldExchange(CFieldExchange* pFX)
 	//{{AFX_FIELD_MAP(CMagicType4Set)
 	pFX->SetFieldType(CFieldExchange::outputColumn);
 	RFX_Long(pFX, _T("[iNum]"), m_iNum);
-	RFX_Text(pFX, _T("[Name]"), m_Name);
-	RFX_Text(pFX, _T("[Description]"), m_Description);
 	RFX_Byte(pFX, _T("[BuffType]"), m_BuffType);
 	RFX_Byte(pFX, _T("[Radius]"), m_Radius);
 	RFX_Int(pFX, _T("[Duration]"), m_Duration);
 	RFX_Byte(pFX, _T("[AttackSpeed]"), m_AttackSpeed);
 	RFX_Byte(pFX, _T("[Speed]"), m_Speed);
 	RFX_Int(pFX, _T("[AC]"), m_AC);
+	RFX_Int(pFX, _T("[ACPct]"), m_ACPct);
 	RFX_Byte(pFX, _T("[Attack]"), m_Attack);
+	RFX_Byte(pFX, _T("[MagicAttack]"), m_MagicAttack);
 	RFX_Int(pFX, _T("[MaxHP]"), m_MaxHP);
+	RFX_Int(pFX, _T("[MaxHPPct]"), m_MaxHPPct);
+	RFX_Int(pFX, _T("[MaxMP]"), m_MaxMP);
+	RFX_Int(pFX, _T("[MaxMPPct]"), m_MaxMPPct);
 	RFX_Byte(pFX, _T("[HitRate]"), m_HitRate);
 	RFX_Int(pFX, _T("[AvoidRate]"), m_AvoidRate);
 	RFX_Byte(pFX, _T("[Str]"), m_Str);
@@ -88,6 +96,8 @@ void CMagicType4Set::DoFieldExchange(CFieldExchange* pFX)
 	RFX_Byte(pFX, _T("[MagicR]"), m_MagicR);
 	RFX_Byte(pFX, _T("[DiseaseR]"), m_DiseaseR);
 	RFX_Byte(pFX, _T("[PoisonR]"), m_PoisonR);
+	RFX_Int(pFX, _T("[ExpPct]"), m_ExpPct);
+	RFX_Int(pFX, _T("[SpecialAmount]"), m_SpecialAmount);
 	//}}AFX_FIELD_MAP
 }
 

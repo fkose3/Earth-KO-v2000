@@ -19,8 +19,6 @@ public:
 // Field/Param Data
 	//{{AFX_FIELD(CMagicType5Set, CRecordset)
 	long	m_iNum;
-	CString	m_Name;
-	CString	m_Description;
 	BYTE	m_Type;
 	BYTE	m_ExpRecover;
 	int		m_NeedStone;

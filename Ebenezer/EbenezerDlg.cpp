@@ -15,7 +15,10 @@
 #include "MagicType3Set.h"
 #include "MagicType4Set.h"
 #include "MagicType5Set.h"
+#include "MaigcType6Set.h"
+#include "MagicType7Set.h"
 #include "MagicType8Set.h"
+#include "MagicType9Set.h"
 #include "ZoneInfoSet.h"
 #include "CoefficientSet.h"
 #include "LevelUpTableSet.h"
@@ -292,6 +295,9 @@ void CEbenezerDlg::PrintConsole(char* buff,WORD color)
 		case 2:
 		  SetConsoleTextAttribute ( h, FOREGROUND_RED+FOREGROUND_INTENSITY );
 			break;
+		case 3:
+		  SetConsoleTextAttribute ( h, 15);
+			break;
 		default:
 		  SetConsoleTextAttribute ( h, FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN );
 			break;
@@ -341,7 +347,13 @@ BOOL CEbenezerDlg::OnInitDialog()
 	wsprintf(strLogFile, "RegionLog-%d-%d-%d.txt", cur.GetYear(), cur.GetMonth(), cur.GetDay());
 	m_RegionLogFile.Open( strLogFile, CFile::modeWrite | CFile::modeCreate | CFile::modeNoTruncate | CFile::shareDenyNone );
 	m_RegionLogFile.SeekToEnd();
-
+	
+	char strMessage[100]; memset(strMessage, 0x00, 100);
+	wsprintf(strMessage,"\t\t*      Tarih - Saat : %d-%d-%d   | %d:%d:%d       *",cur.GetYear(),cur.GetMonth(),cur.GetDay(),cur.GetHour(),cur.GetMinute(),cur.GetSecond());
+	PrintConsole("\t\t*****************************************************",3);
+	PrintConsole(strMessage,3);
+	PrintConsole("\t\t* Ebenezer Yukleniyor bu islem biraz uzun surebilir *",3);
+	PrintConsole("\t\t*****************************************************",3);
 	wsprintf(strLogFile, "PacketLog-%d-%d-%d.txt", cur.GetYear(), cur.GetMonth(), cur.GetDay());
 	m_LogFile.Open( strLogFile, CFile::modeWrite | CFile::modeCreate | CFile::modeNoTruncate | CFile::shareDenyNone );
 	m_LogFile.SeekToEnd();
@@ -418,88 +430,144 @@ BOOL CEbenezerDlg::OnInitDialog()
 	}
 	PrintConsole("\t\t[  OK  ]",1);
 
-	/*LogFileWrite("before 1\r\n");
-	if( LoadMagicType1() == FALSE ) {
-		AfxMessageBox("MagicType1 Load Fail");
+	PrintConsole("->MAGIC TYPE 1 Table Loading...");
+	if(!LoadMagicType1())
+	{
+		PrintConsole("\t\t[  FAIL  ]",2);
 		AfxPostQuitMessage(0);
 		return FALSE;
 	}
-	LogFileWrite("before 2\r\n");
-	if( LoadMagicType2() == FALSE ) {
-		AfxMessageBox("MagicType2 Load Fail");
-		AfxPostQuitMessage(0);
-		return FALSE;
-	}
-	LogFileWrite("before 3\r\n");
-	if( LoadMagicType3() == FALSE ) {
-		AfxMessageBox("MagicType3 Load Fail");
-		AfxPostQuitMessage(0);
-		return FALSE;
-	}
-	LogFileWrite("before 4\r\n");
-	if( LoadMagicType4() == FALSE ) {
-		AfxMessageBox("MagicType4 Load Fail");
-		AfxPostQuitMessage(0);
-		return FALSE;
-	}
-	LogFileWrite("before 5\r\n");
-	if( LoadMagicType5() == FALSE ) {
-		AfxMessageBox("MagicType5 Load Fail");
-		AfxPostQuitMessage(0);
-		return FALSE;
-	}
-	LogFileWrite("before 8\r\n");
-	if( LoadMagicType8() == FALSE ) {
-		AfxMessageBox("MagicType8 Load Fail");
-		AfxPostQuitMessage(0);
-		return FALSE;
-	}*/ 
-	LogFileWrite("before Coeffi\r\n");
-	if( LoadCoefficientTable() == FALSE ){
-		AfxMessageBox("CharaterDataTable Load Fail");
-		AfxPostQuitMessage(0);
-		return FALSE;
-	}
-	LogFileWrite("before Level\r\n");
-	if( LoadLevelUpTable() == FALSE ){
-		AfxMessageBox("LevelUpTable Load Fail");
-		AfxPostQuitMessage(0);
-		return FALSE;
-	}
+	PrintConsole("\t\t[  OK  ]",1);
 
-	LogFileWrite("before All Kinghts\r\n");
-	if( LoadAllKnights() == FALSE ) {
-		AfxMessageBox("KnightsData Load Fail");
+	PrintConsole("->MAGIC TYPE 2 Table Loading...");
+	if(!LoadMagicType2())
+	{
+		PrintConsole("\t\t[  FAIL  ]",2);
 		AfxPostQuitMessage(0);
 		return FALSE;
 	}
+	PrintConsole("\t\t[  OK  ]",1);
 	
-	LogFileWrite("before All Knights User\r\n");
+	PrintConsole("->MAGIC TYPE 3 Table Loading...");
+	if(!LoadMagicType3())
+	{
+		PrintConsole("\t\t[  FAIL  ]",2);
+		AfxPostQuitMessage(0);
+		return FALSE;
+	}
+	PrintConsole("\t\t[  OK  ]",1);
+
+	PrintConsole("->MAGIC TYPE 4 Table Loading...");
+	if(!LoadMagicType4())
+	{
+		PrintConsole("\t\t[  FAIL  ]",2);
+		AfxPostQuitMessage(0);
+		return FALSE;
+	}
+	PrintConsole("\t\t[  OK  ]",1);
+
+	PrintConsole("->MAGIC TYPE 5 Table Loading...");
+	if(!LoadMagicType5())
+	{
+		PrintConsole("\t\t[  FAIL  ]",2);
+		AfxPostQuitMessage(0);
+		return FALSE;
+	}
+	PrintConsole("\t\t[  OK  ]",1);
+
+	PrintConsole("->MAGIC TYPE 6 Table Loading...");
+	if(!LoadMagicType6())
+	{
+		PrintConsole("\t\t[  FAIL  ]",2);
+		AfxPostQuitMessage(0);
+		return FALSE;
+	}
+	PrintConsole("\t\t[  OK  ]",1);
+
+	PrintConsole("->MAGIC TYPE 7 Table Loading...");
+	if(!LoadMagicType7())
+	{
+		PrintConsole("\t\t[  FAIL  ]",2);
+		AfxPostQuitMessage(0);
+		return FALSE;
+	}
+	PrintConsole("\t\t[  OK  ]",1);
+
+	PrintConsole("->MAGIC TYPE 8 Table Loading...");
+	if(!LoadMagicType8())
+	{
+		PrintConsole("\t\t[  FAIL  ]",2);
+		AfxPostQuitMessage(0);
+		return FALSE;
+	}
+	PrintConsole("\t\t[  OK  ]",1);
+
+	PrintConsole("->MAGIC TYPE 9 Table Loading...");
+	if(!LoadMagicType9())
+	{
+		PrintConsole("\t\t[  FAIL  ]",2);
+		AfxPostQuitMessage(0);
+		return FALSE;
+	}
+	PrintConsole("\t\t[  OK  ]",1);
+
+	PrintConsole("->Loading Coffident Table...");
+	if( LoadCoefficientTable() == FALSE ){
+		PrintConsole("\t\t[  FAIL  ]",2);
+		AfxPostQuitMessage(0);
+		return FALSE;
+	}
+	PrintConsole("\t\t[  OK  ]",1);
+
+	PrintConsole("->Loading Level-Up Table");
+	if( LoadLevelUpTable() == FALSE ){
+		PrintConsole("\t\t[  FAIL  ]",2);
+		AfxPostQuitMessage(0);
+		return FALSE;
+	}
+	PrintConsole("\t\t[  OK  ]",1);
+
+	PrintConsole("->Loading Knights Table");
+	if( LoadAllKnights() == FALSE ) {
+		PrintConsole("\t\t[  FAIL  ]",2);
+		AfxPostQuitMessage(0);
+		return FALSE;
+	}
+	PrintConsole("\t\t[  OK  ]",1);
+	
+	PrintConsole("->Loading Knights User Table");
 	if( LoadAllKnightsUserData() == FALSE ) {
-		AfxMessageBox("LoadAllKnightsUserData Load Fail");
+		PrintConsole("\t\t[  FAIL  ]",2);
 		AfxPostQuitMessage(0);
 		return FALSE;
-	}	
+	}
+	PrintConsole("\t\t[  OK  ]",1);	
 
-	LogFileWrite("before home\r\n");
+	PrintConsole("->Loading Home Table");
 	if( LoadHomeTable() == FALSE ){
-		AfxMessageBox("LoadHomeTable Load Fail");
+		PrintConsole("\t\t[  FAIL  ]",2);
 		AfxPostQuitMessage(0);
 		return FALSE;
 	}
+	PrintConsole("\t\t[  OK  ]",1);
 
-	LogFileWrite("before battle\r\n");
+	PrintConsole("->Loading Battle Table");
 	if( LoadBattleTable() == FALSE )	{
-		AfxMessageBox("LoadBattleTable Load Fail");
+		PrintConsole("\t\t[  FAIL  ]",2);
+		AfxPostQuitMessage(0);
+		return FALSE;
+	}
+	PrintConsole("\t\t[  OK  ]",1);
+
+	PrintConsole("->Loading Map Smd Files");
+	if( !MapFileLoad() )
+	{
+		PrintConsole("\t\t[  FAIL  ]",2);
 		AfxPostQuitMessage(0);
 		return FALSE;
 	}
 
-	LogFileWrite("before map file\r\n");
-	if( !MapFileLoad() )
-		AfxPostQuitMessage(0);
-
-	LogFileWrite("after map file\r\n");
+	PrintConsole("\t\t[  OK  ]",1);
 
 	LoadNoticeData();
 
@@ -621,8 +689,17 @@ BOOL CEbenezerDlg::DestroyWindow()
 	if( !m_Magictype5Array.IsEmpty() )
 		m_Magictype5Array.DeleteAllData();
 
+	if( !m_Magictype6Array.IsEmpty() )
+		m_Magictype6Array.DeleteAllData();
+
+	if( !m_Magictype7Array.IsEmpty() )
+		m_Magictype7Array.DeleteAllData();
+
 	if( !m_Magictype8Array.IsEmpty() )
 		m_Magictype8Array.DeleteAllData(); 
+
+	if( !m_Magictype9Array.IsEmpty() )
+		m_Magictype9Array.DeleteAllData();
 
 	if( !m_arNpcArray.IsEmpty() )
 		m_arNpcArray.DeleteAllData();
@@ -759,13 +836,18 @@ BOOL CEbenezerDlg::AIServerConnect()
 {
 	C3DMap* pMap = NULL;
 
-	strcpy(m_AIServerIP, m_Ini.GetProfileString("AI_SERVER", "IP", "192.203.143.119"));
+	strcpy(m_AIServerIP, m_Ini.GetProfileString("AI_SERVER", "IP", "127.0.0.1"));
 	
 	
 	for( int i=0; i<MAX_AI_SOCKET; i++ ) {
 		if( !AISocketConnect( i ) ) {
-			AfxMessageBox("AI Server Connect Fail!!");
+			PrintConsole("Ai Server Connection Failed",2);
 			return FALSE;
+		}else
+		{
+			char strMessage[50]; memset(strMessage,0x00,50);
+			wsprintf(strMessage,"Ai Server Connect [Port %d]",i);
+			PrintConsole(strMessage);
 		}
 	}
 
@@ -1263,22 +1345,22 @@ BOOL CEbenezerDlg::LoadMagicTable()
 	{
 		_MAGIC_TABLE* pTableMagic = new _MAGIC_TABLE;
 				
-		pTableMagic->iNum = MagicTableSet.m_MagicNum;
-		pTableMagic->sFlyingEffect = MagicTableSet.m_FlyingEffect;
-		pTableMagic->bMoral = MagicTableSet.m_Moral;
-		pTableMagic->bSkillLevel = MagicTableSet.m_SkillLevel;
-		pTableMagic->sSkill = MagicTableSet.m_Skill;
-		pTableMagic->sMsp = MagicTableSet.m_Msp;
-		pTableMagic->sHP = MagicTableSet.m_HP;
-		pTableMagic->bItemGroup = MagicTableSet.m_ItemGroup;
-		pTableMagic->iUseItem = MagicTableSet.m_UseItem;
-		pTableMagic->bCastTime = MagicTableSet.m_CastTime;
-		pTableMagic->bReCastTime = MagicTableSet.m_ReCastTime;
-		pTableMagic->bSuccessRate = MagicTableSet.m_SuccessRate;
-		pTableMagic->bType1 = MagicTableSet.m_Type1;
-		pTableMagic->bType2 = MagicTableSet.m_Type2;
-		pTableMagic->sRange = MagicTableSet.m_Range;
-		pTableMagic->bEtc = MagicTableSet.m_Etc;
+		pTableMagic->iNum = MagicTableSet.iNum;
+		pTableMagic->bFlyingEffect = MagicTableSet.bFlyingEffect;
+		pTableMagic->bMoral = MagicTableSet.bMoral;
+		pTableMagic->sSkillLevel = MagicTableSet.sSkillLevel;
+		pTableMagic->sSkill = MagicTableSet.sSkill;
+		pTableMagic->sMsp = MagicTableSet.sMsp;
+		pTableMagic->sHP = MagicTableSet.sHP;
+		pTableMagic->bItemGroup = MagicTableSet.bItemGroup;
+		pTableMagic->iUseItem = MagicTableSet.iUseItem;
+		pTableMagic->bCastTime = MagicTableSet.bCastTime;
+		pTableMagic->sReCastTime = MagicTableSet.sReCastTime;
+		pTableMagic->bSuccessRate = MagicTableSet.bSuccessRate;
+		pTableMagic->bType[0] = MagicTableSet.bType1;
+		pTableMagic->bType[1] = MagicTableSet.bType2;
+		pTableMagic->sRange = MagicTableSet.sRange;
+		pTableMagic->sEtc = MagicTableSet.sEtc;
 
 		if( !m_MagictableArray.PutData(pTableMagic->iNum, pTableMagic) ) {
 			TRACE("MagicTable PutData Fail - %d\n", pTableMagic->iNum );
@@ -1318,6 +1400,7 @@ BOOL CEbenezerDlg::LoadMagicType1()
 		pType1Magic->bComboType = MagicType1Set.m_ComboType;
 		pType1Magic->sComboDamage = MagicType1Set.m_ComboDamage;
 		pType1Magic->sHit = MagicType1Set.m_Hit;
+		pType1Magic->sAddDamage = MagicType1Set.m_AddDamage;
 		pType1Magic->sHitRate = MagicType1Set.m_HitRate;
 		pType1Magic->sRange = MagicType1Set.m_Range;
 
@@ -1436,8 +1519,13 @@ BOOL CEbenezerDlg::LoadMagicType4()
 		pType4Magic->bAttackSpeed = MagicType4Set.m_AttackSpeed;
 		pType4Magic->bSpeed = MagicType4Set.m_Speed;
 		pType4Magic->sAC = MagicType4Set.m_AC;
+		pType4Magic->sACPct = MagicType4Set.m_ACPct;
 		pType4Magic->bAttack = MagicType4Set.m_Attack;
+		pType4Magic->bMagicAttack = MagicType4Set.m_MagicAttack;
 		pType4Magic->sMaxHP = MagicType4Set.m_MaxHP;
+		pType4Magic->sMaxHPPct = MagicType4Set.m_MaxHPPct;
+		pType4Magic->sMaxMP = MagicType4Set.m_MaxMP;
+		pType4Magic->sMaxMPPct = MagicType4Set.m_MaxMPPct;
 		pType4Magic->bHitRate = MagicType4Set.m_HitRate;
 		pType4Magic->sAvoidRate = MagicType4Set.m_AvoidRate;
 		pType4Magic->bStr = MagicType4Set.m_Str;
@@ -1451,6 +1539,8 @@ BOOL CEbenezerDlg::LoadMagicType4()
 		pType4Magic->bMagicR = MagicType4Set.m_MagicR;
 		pType4Magic->bDiseaseR = MagicType4Set.m_DiseaseR;
 		pType4Magic->bPoisonR = MagicType4Set.m_PoisonR;
+		pType4Magic->sExpPct = MagicType4Set.m_ExpPct;
+		pType4Magic->sSpecialAmount = MagicType4Set.m_SpecialAmount;
 
 		if( !m_Magictype4Array.PutData(pType4Magic->iNum, pType4Magic) ) 
 		{
@@ -1499,6 +1589,108 @@ BOOL CEbenezerDlg::LoadMagicType5()
 	return TRUE;
 }
 
+BOOL CEbenezerDlg::LoadMagicType6()
+{
+	CMagicType6Set	MagicType6Set;
+
+	if( !MagicType6Set.Open() ) {
+		AfxMessageBox(_T("MagicType6 Open Fail!"));
+		return FALSE;
+	}
+
+	if(MagicType6Set.IsBOF() || MagicType6Set.IsEOF()) {
+		AfxMessageBox(_T("MagicType6 Empty!"));
+		return FALSE;
+	}
+
+	MagicType6Set.MoveFirst();
+
+	while( !MagicType6Set.IsEOF() )
+	{
+		_MAGIC_TYPE6* pType6Magic = new _MAGIC_TYPE6;
+		
+		pType6Magic->iNum = MagicType6Set.iNum;
+		pType6Magic->sSize = MagicType6Set.sSize;
+		pType6Magic->sTransformID = MagicType6Set.sTransformID;
+		pType6Magic->sDuration = MagicType6Set.sDuration;
+		pType6Magic->sMaxHp = MagicType6Set.sMaxHp;
+		pType6Magic->sMaxMp = MagicType6Set.sMaxMp;
+		pType6Magic->bSpeed = MagicType6Set.bSpeed;
+		pType6Magic->sAttackSpeed = MagicType6Set.sAttackSpeed;
+		pType6Magic->sTotalHit = MagicType6Set.sTotalHit;
+		pType6Magic->sTotalAc = MagicType6Set.sTotalAc;
+		pType6Magic->sTotalHitRate = MagicType6Set.sTotalHitRate;
+		pType6Magic->sTotalColdR = MagicType6Set.sTotalColdR;
+		pType6Magic->sTotalFireR = MagicType6Set.sTotalFireR;
+		pType6Magic->sTotalLightningR = MagicType6Set.sTotalLightningR;
+		pType6Magic->sTotalMagicR = MagicType6Set.sTotalMagicR;
+		pType6Magic->sTotalPoisonR = MagicType6Set.sTotalPoisonR;
+		pType6Magic->sTotalDiseaseR = MagicType6Set.sTotalDiseaseR;
+		pType6Magic->sTotalEvasionRate = MagicType6Set.sTotalEvasionRate;
+		pType6Magic->sClass = MagicType6Set.sClass;
+		pType6Magic->bUserSkillUse = MagicType6Set.bUserSkillUse;
+		pType6Magic->bNeedItem = MagicType6Set.bNeedItem;
+		pType6Magic->bSkillSuccessRate = MagicType6Set.bSkillSuccessRate;
+		pType6Magic->bMonsterFriendly = MagicType6Set.bMonsterFriendly;
+
+		if( !m_Magictype6Array.PutData(pType6Magic->iNum, pType6Magic) ) {
+			TRACE("MagicType6 PutData Fail - %d\n", pType6Magic->iNum );
+			delete pType6Magic;
+			pType6Magic = NULL;
+		}	
+		MagicType6Set.MoveNext();
+	}
+
+	return TRUE;
+}
+
+
+BOOL CEbenezerDlg::LoadMagicType7()
+{
+	CMagicType7Set	MagicType7Set;
+
+	if( !MagicType7Set.Open() ) {
+		AfxMessageBox(_T("MagicType7 Open Fail!"));
+		return FALSE;
+	}
+
+	if(MagicType7Set.IsBOF() || MagicType7Set.IsEOF()) {
+		AfxMessageBox(_T("MagicType7 Empty!"));
+		return FALSE;
+	}
+
+	MagicType7Set.MoveFirst();
+
+	while( !MagicType7Set.IsEOF() )
+	{
+		_MAGIC_TYPE7* pType7Magic = new _MAGIC_TYPE7;
+		
+		pType7Magic->iNum = MagicType7Set.iNum;
+		pType7Magic->bValidGroup = MagicType7Set.bValidGroup;
+		pType7Magic->bNationChange = MagicType7Set.bNationChange;
+		pType7Magic->sMonsterNum = MagicType7Set.sMonsterNum;
+		pType7Magic->bRadius = MagicType7Set.bRadius;
+		pType7Magic->bStateChange = MagicType7Set.bStateChange;
+		pType7Magic->bTargetChange = MagicType7Set.bTargetChange;
+		pType7Magic->sDamage = MagicType7Set.sDamage;
+		pType7Magic->sDuration = MagicType7Set.sDuration;
+		pType7Magic->sHitRate = MagicType7Set.sHitRate;
+		pType7Magic->bVision = MagicType7Set.bVision;
+		pType7Magic->nNeedItem = MagicType7Set.nNeedItem;
+
+		if( !m_Magictype7Array.PutData(pType7Magic->iNum, pType7Magic) ) {
+			TRACE("MagicType7 PutData Fail - %d\n", pType7Magic->iNum );
+			delete pType7Magic;
+			pType7Magic = NULL;
+		}	
+		MagicType7Set.MoveNext();
+	}
+
+	return TRUE;
+}
+
+
+
 BOOL CEbenezerDlg::LoadMagicType8()
 {
 	CMagicType8Set	MagicType8Set;
@@ -1534,6 +1726,38 @@ BOOL CEbenezerDlg::LoadMagicType8()
 	}
 
 	return TRUE; 
+}
+
+BOOL CEbenezerDlg::LoadMagicType9()
+{
+	CMagicType9Set	MagicType9Set;
+
+	if( !MagicType9Set.Open() ) {
+		AfxMessageBox(_T("MagicType9 Open Fail!"));
+		return FALSE;
+	}
+
+	if(MagicType9Set.IsBOF() || MagicType9Set.IsEOF()) {
+		AfxMessageBox(_T("MagicType9 Empty!"));
+		return FALSE;
+	}
+
+	MagicType9Set.MoveFirst();
+
+	while( !MagicType9Set.IsEOF() )
+	{
+		_MAGIC_TYPE9* pType9Magic = new _MAGIC_TYPE9;
+
+		
+		if( !m_Magictype9Array.PutData(pType9Magic->iNum, pType9Magic) ) {
+			TRACE("MagicType9 PutData Fail - %d\n", pType9Magic->iNum );
+			delete pType9Magic;
+			pType9Magic = NULL;
+		}	
+		MagicType9Set.MoveNext();
+	}
+
+	return TRUE;
 }
 
 BOOL CEbenezerDlg::LoadCoefficientTable()
@@ -1620,7 +1844,7 @@ void CEbenezerDlg::GetTimeFromIni()
 	int year=0, month=0, date=0, hour=0, server_count=0, sgroup_count = 0, i=0;
 	char ipkey[20]; memset( ipkey, 0x00, 20 );
 
-	m_Ini.SetPath("server.ini");
+	m_Ini.SetPath("iniFile/server.ini");
 	m_nYear = m_Ini.GetProfileInt("TIMER", "YEAR", 1);
 	m_nMonth = m_Ini.GetProfileInt("TIMER", "MONTH", 1);
 	m_nDate = m_Ini.GetProfileInt("TIMER", "DATE", 1);

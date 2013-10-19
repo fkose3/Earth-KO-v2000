@@ -536,6 +536,7 @@ void CUser::VersionCheck()
 	char send_buff[128];
 	memset( send_buff, NULL, 128 );
 
+	/*
 	SetByte( send_buff, WIZ_VERSION_CHECK, send_index );
 	SetShort( send_buff, __VERSION, send_index );
 	// Cryption
@@ -545,6 +546,12 @@ void CUser::VersionCheck()
 	// Cryption
 	m_CryptionFlag = 1;
 	///~
+	*/
+	SetByte( send_buff, WIZ_VERSION_CHECK, send_index ); 
+	SetByte( send_buff, 0x01, send_index );			//USKO 1965
+	SetShort( send_buff, __VERSION, send_index );
+	SetInt64(send_buff, 0x00, send_index);
+	Send( send_buff, send_index );
 }
 
 void CUser::LoginProcess(char *pBuf )
@@ -3104,7 +3111,7 @@ short CUser::GetDamage(short tid, int magicid)
 		pTable = m_pMain->m_MagictableArray.GetData( magicid );     // Get main magic table.
 		if( !pTable ) return -1; 
 		
-		if (pTable->bType1 == 1) {	// SKILL HIT!			                                
+		if (pTable->bType[0] == 1) {	// SKILL HIT!			                                
 			pType1 = m_pMain->m_Magictype1Array.GetData( magicid );	    // Get magic skill table type 1.
 			if( !pType1 ) return -1;     	                                
 
@@ -3120,7 +3127,7 @@ short CUser::GetDamage(short tid, int magicid)
 			}
 			temp_hit = temp_hit_B * (pType1->sHit / 100.0f);
 		}
-		else if (pTable->bType1 == 2) {   // ARROW HIT!
+		else if (pTable->bType[0] == 2) {   // ARROW HIT!
 			pType2 = m_pMain->m_Magictype2Array.GetData( magicid );	    // Get magic skill table type 1.
 			if( !pType2 ) return -1; 
 			
@@ -3155,7 +3162,7 @@ short CUser::GetDamage(short tid, int magicid)
 			if( magicid > 0 ) {	 // Skill Hit.
 				damage = (short)temp_hit;
 				random = myrand(0, damage);
-				if (pTable->bType1 == 1) {
+				if (pTable->bType[0] == 1) {
 					damage = (short)((temp_hit + 0.3f * random) + 0.99f);
 				}
 				else {

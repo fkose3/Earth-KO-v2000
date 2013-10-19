@@ -30,6 +30,7 @@
 #define IDP_MINIMUM_OFFICER             125
 #define IDP_ANNOUNCEMENT                126
 #define IDR_MAINFRAME                   128
+#define IDB_BITMAP1                     129
 #define IDS_ELMORAD_LOSER               130
 #define IDS_KARUS_LOSER                 131
 #define IDS_BANISH_USER                 132
@@ -58,7 +59,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        129
+#define _APS_NEXT_RESOURCE_VALUE        130
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1007
 #define _APS_NEXT_SYMED_VALUE           101

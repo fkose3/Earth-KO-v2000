@@ -143,6 +143,10 @@ END_MESSAGE_MAP()
 
 BOOL CAujardDlg::OnInitDialog()
 {
+	AllocConsole();
+	freopen( "CON", "w" , stdout);
+
+	printf("ByKOSE Aujard..! Yukleniyor.");
 	CDialog::OnInitDialog();
 
 	// Set the icon for this dialog.  The framework does this automatically
@@ -173,7 +177,7 @@ BOOL CAujardDlg::OnInitDialog()
 	}
 
 	CString inipath;
-	inipath.Format( "%s\\Aujard.ini", GetProgPath() );
+	inipath.Format( "%s\\iniFile\\Aujard.ini", GetProgPath() );
 
 	GetPrivateProfileString( "ODBC", "ACCOUNT_DSN", "", m_strAccountDSN, 24, inipath );
 	GetPrivateProfileString( "ODBC", "ACCOUNT_UID", "", m_strAccountUID, 24, inipath );
@@ -193,11 +197,11 @@ BOOL CAujardDlg::OnInitDialog()
 		return FALSE;
 	}
 
-	if( !LoadItemTable() ) {
+	/*if( !LoadItemTable() ) {
 		AfxMessageBox("Load ItemTable Fail!!");
 		AfxPostQuitMessage(0);
 		return FALSE;
-	}
+	}*/
 
 	SetTimer( PROCESS_CHECK, 40000, NULL );
 	SetTimer( CONCURRENT_CHECK, 300000, NULL );

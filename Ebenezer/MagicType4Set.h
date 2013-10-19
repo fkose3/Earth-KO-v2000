@@ -19,16 +19,19 @@ public:
 // Field/Param Data
 	//{{AFX_FIELD(CMagicType4Set, CRecordset)
 	long	m_iNum;
-	CString	m_Name;
-	CString	m_Description;
 	BYTE	m_BuffType;
 	BYTE	m_Radius;
 	int		m_Duration;
 	BYTE	m_AttackSpeed;
 	BYTE	m_Speed;
 	int		m_AC;
+	int		m_ACPct;
 	BYTE	m_Attack;
+	BYTE    m_MagicAttack;
 	int		m_MaxHP;
+	int		m_MaxHPPct;
+	int		m_MaxMP;
+	int		m_MaxMPPct;
 	BYTE	m_HitRate;
 	int		m_AvoidRate;
 	BYTE	m_Str;
@@ -42,6 +45,8 @@ public:
 	BYTE	m_MagicR;
 	BYTE	m_DiseaseR;
 	BYTE	m_PoisonR;
+	int		m_ExpPct;
+	int		m_SpecialAmount;
 	//}}AFX_FIELD
 
 

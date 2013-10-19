@@ -14,6 +14,7 @@
 #include "Map.h"
 #include "Define.h"
 #include "GameDefine.h"
+#include "structs.h"
 #include "AISocket.h"
 #include "Npc.h"
 #include "SharedMem.h"
@@ -40,7 +41,10 @@ typedef CSTLMap <_MAGIC_TYPE2>				Magictype2Array;
 typedef CSTLMap <_MAGIC_TYPE3>				Magictype3Array;
 typedef CSTLMap	<_MAGIC_TYPE4>				Magictype4Array;
 typedef CSTLMap <_MAGIC_TYPE5>				Magictype5Array;
-typedef CSTLMap <_MAGIC_TYPE8>				Magictype8Array; 
+typedef CSTLMap <_MAGIC_TYPE6>				Magictype6Array;
+typedef CSTLMap <_MAGIC_TYPE7>				Magictype7Array;
+typedef CSTLMap <_MAGIC_TYPE8>				Magictype8Array;
+typedef CSTLMap <_MAGIC_TYPE9>				Magictype9Array; 
 typedef CSTLMap <CNpc>						NpcArray;
 typedef CSTLMap <CAISocket>					AISocketArray;
 typedef CSTLMap <_PARTY_GROUP>				PartyArray;
@@ -83,13 +87,16 @@ public:
 	void BattleZoneOpenTimer();
 	void BattleZoneOpen( int nType );	// 0:open 1:close
 	void AliveUserCheck();
-	void WithdrawUserOut();
-	BOOL LoadMagicType8();
+	void WithdrawUserOut();	
+	BOOL LoadMagicType1();
+	BOOL LoadMagicType2();
+	BOOL LoadMagicType3();
 	BOOL LoadMagicType4();
 	BOOL LoadMagicType5();
-	BOOL LoadMagicType3();
-	BOOL LoadMagicType2();
-	BOOL LoadMagicType1();
+	BOOL LoadMagicType6();
+	BOOL LoadMagicType7();
+	BOOL LoadMagicType8();
+	BOOL LoadMagicType9();
 	void KillUser( const char* strbuff );
 	void Send_PartyMember( int party, char* pBuf, int len );
 	void Send_KnightsMember( int index, char* pBuf, int len, int zone=100 );
@@ -158,7 +165,10 @@ public:
 	Magictype3Array			m_Magictype3Array;
 	Magictype4Array			m_Magictype4Array;
 	Magictype5Array         m_Magictype5Array;
+	Magictype6Array			m_Magictype6Array;
+	Magictype7Array			m_Magictype7Array;
 	Magictype8Array         m_Magictype8Array;
+	Magictype9Array			m_Magictype9Array;
 	CoefficientArray		m_CoefficientArray;		// 공식 계산 계수데이타 테이블
 	LevelUpArray			m_LevelUpArray;
 	PartyArray				m_PartyArray;

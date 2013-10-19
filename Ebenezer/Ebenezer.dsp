@@ -279,7 +279,19 @@ SOURCE=.\MagicType5Set.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\MagicType7Set.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\MagicType8Set.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\MagicType9Set.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\MaigcType6Set.cpp
 # End Source File
 # Begin Source File
 
@@ -519,7 +531,19 @@ SOURCE=.\MagicType5Set.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\MagicType7Set.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\MagicType8Set.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\MagicType9Set.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\MaigcType6Set.h
 # End Source File
 # Begin Source File
 
@@ -548,6 +572,10 @@ SOURCE=.\StdAfx.h
 # Begin Source File
 
 SOURCE=.\STLMap.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\structs.h
 # End Source File
 # Begin Source File
 

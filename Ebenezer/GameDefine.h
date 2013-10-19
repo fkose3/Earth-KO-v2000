@@ -1,7 +1,7 @@
 #ifndef _GAMEDEFINE_H
 #define _GAMEDEFINE_H
 
-#define __VERSION			1081
+#define __VERSION			1960
 
 //////////////////// 직업별 Define ////////////////////
 #define KARUWARRRIOR		101		// 카루전사
@@ -439,105 +439,7 @@ struct _KNIGHTS_USER
 	char	strUserName[MAX_ID_SIZE+1];			// 캐릭터의 이름
 };
 
-struct _MAGIC_TABLE
-{
-	int		iNum;
-	short	sFlyingEffect;
-	BYTE	bMoral;
-	BYTE	bSkillLevel;	
-	short	sSkill;
-	short	sMsp;
-	short   sHP;
-	BYTE	bItemGroup;
-	int		iUseItem;
-	BYTE	bCastTime;
-	BYTE	bReCastTime;
-	BYTE	bSuccessRate;
-	BYTE	bType1;
-	BYTE	bType2;
-	short   sRange;
-	BYTE	bEtc;
-};
 
-struct _MAGIC_TYPE8
-{
-	int     iNum;
-	BYTE    bTarget;
-	short   sRadius;
-	BYTE    bWarpType;
-	short   sExpRecover;
-};
-
-struct _MAGIC_TYPE5
-{
-	int		iNum;
-	BYTE	bType;
-	BYTE	bExpRecover;
-	short	sNeedStone;
-};
-
-struct _MAGIC_TYPE4
-{
-	int     iNum;
-	short   sMSP;
-	BYTE    bBuffType;
-	BYTE    bRadius;
-	short   sDuration;
-	BYTE    bAttackSpeed;
-	BYTE    bSpeed;
-	short   sAC;
-	BYTE    bAttack;
-	short   sMaxHP;
-	BYTE    bHitRate;
-	short   sAvoidRate;
-	BYTE    bStr;
-	BYTE    bSta;
-	BYTE    bDex;
-	BYTE    bIntel;
-	BYTE    bCha;
-	BYTE    bFireR;
-	BYTE    bColdR;
-	BYTE    bLightningR;
-	BYTE    bMagicR;
-	BYTE    bDiseaseR;
-	BYTE    bPoisonR;
-};
-
-struct _MAGIC_TYPE3
-{
-	int		iNum;
-	BYTE	bRadius;
-	short	sAngle;
-	short	sFirstDamage;
-	short	sEndDamage;
-	short	sTimeDamage;
-	BYTE	bDirectType;
-	short	sDuration;
-	BYTE	bAttribute;
-};
-
-struct _MAGIC_TYPE2
-{
-	int     iNum;
-	BYTE    bHitType;
-	short   sHitRate;
-	short	sAddDamage;
-	short   sAddRange;
-	BYTE    bNeedArrow;
-};
-
-struct _MAGIC_TYPE1
-{
-	int		iNum;
-	BYTE	bHitType;
-	short	sHitRate;
-	short	sHit;
-	BYTE	bDelay;
-	BYTE	bComboType;
-	BYTE	bComboCount;
-	short	sComboDamage;
-	short	sRange;
-};
 
 struct _ZONE_SERVERINFO
 {

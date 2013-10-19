@@ -1,0 +1,7 @@
+Aujard Start : 10월 19일 13시 43분
+2013-10-19 13:45, * Packet Count : recv=0, send=0, realsend=0 , time = 13:45
+
+2013-10-19 13:47, * Packet Count : recv=0, send=0, realsend=0 , time = 13:47
+
+2013-10-19 13:49, * Packet Count : recv=0, send=0, realsend=0 , time = 13:49
+

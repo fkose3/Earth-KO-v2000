@@ -21,8 +21,6 @@ CMagicType3Set::CMagicType3Set(CDatabase* pdb)
 {
 	//{{AFX_FIELD_INIT(CMagicType3Set)
 	m_iNum = 0;
-	m_Name = _T("");
-	m_Description = _T("");
 	m_Radius = 0;
 	m_Angle = 0;
 	m_DirectType = 0;
@@ -31,7 +29,7 @@ CMagicType3Set::CMagicType3Set(CDatabase* pdb)
 	m_TimeDamage = 0;
 	m_Duration = 0;
 	m_Attribute = 0;
-	m_nFields = 11;
+	m_nFields = 9;
 	//}}AFX_FIELD_INIT
 	m_nDefaultType = snapshot;
 }
@@ -52,8 +50,6 @@ void CMagicType3Set::DoFieldExchange(CFieldExchange* pFX)
 	//{{AFX_FIELD_MAP(CMagicType3Set)
 	pFX->SetFieldType(CFieldExchange::outputColumn);
 	RFX_Long(pFX, _T("[iNum]"), m_iNum);
-	RFX_Text(pFX, _T("[Name]"), m_Name);
-	RFX_Text(pFX, _T("[Description]"), m_Description);
 	RFX_Byte(pFX, _T("[Radius]"), m_Radius);
 	RFX_Int(pFX, _T("[Angle]"), m_Angle);
 	RFX_Byte(pFX, _T("[DirectType]"), m_DirectType);
