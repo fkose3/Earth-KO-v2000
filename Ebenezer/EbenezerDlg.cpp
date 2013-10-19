@@ -281,8 +281,30 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CEbenezerDlg message handlers
 
+void CEbenezerDlg::PrintConsole(char* buff,WORD color)
+{
+	HANDLE h = GetStdHandle ( STD_OUTPUT_HANDLE );
+	switch(color)
+	{
+		case 1:
+		  SetConsoleTextAttribute ( h, FOREGROUND_GREEN+FOREGROUND_INTENSITY );
+			break;
+		case 2:
+		  SetConsoleTextAttribute ( h, FOREGROUND_RED+FOREGROUND_INTENSITY );
+			break;
+		default:
+		  SetConsoleTextAttribute ( h, FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN );
+			break;
+	}
+	printf( "%s\r\n",buff );
+}
+
+
 BOOL CEbenezerDlg::OnInitDialog()
 {
+	AllocConsole();
+	freopen( "CON", "w" , stdout);
+
 	CDialog::OnInitDialog();
 
 	// Set the icon for this dialog.  The framework does this automatically
@@ -307,10 +329,10 @@ BOOL CEbenezerDlg::OnInitDialog()
 	m_fReConnectStart = 0.0f;
 	// sungyong~ 2002.05.23
 
-	if( AfxMessageBox("If you are restarting, please restart after all data is saved...do you want to continue?", MB_OKCANCEL) == IDCANCEL ) {
+	/*if( AfxMessageBox("If you are restarting, please restart after all data is saved...do you want to continue?", MB_OKCANCEL) == IDCANCEL ) {
 		AfxPostQuitMessage(0);
 		return FALSE;
-	}
+	}*/
 	//----------------------------------------------------------------------
 	//	Logfile initialize
 	//----------------------------------------------------------------------
@@ -334,54 +356,69 @@ BOOL CEbenezerDlg::OnInitDialog()
 	for(int i=0; i<MAX_USER; i++) {
 		m_Iocport.m_SockArrayInActive[i] = new CUser;
 	}
-
+	
+	PrintConsole("->Listening Port");
 	_ZONE_SERVERINFO *pInfo = NULL;
 	pInfo = m_ServerArray.GetData( m_nServerNo );
 	if( !pInfo ) {
-		AfxMessageBox("No Listen Port!!");
+		PrintConsole("\t\t[  FAIL  ]",2);
 		AfxPostQuitMessage(0);
 		return FALSE;
 	}
+	PrintConsole("\t\t[  OK  ]",1);
 
+	PrintConsole("->Create Listening Port");
 	if ( !m_Iocport.Listen( pInfo->sPort ) )
 		AfxMessageBox("FAIL TO CREATE LISTEN STATE", MB_OK);
 
 	if( !InitializeMMF() ) {
-		AfxMessageBox("Main Shared Memory Initialize Fail");
+		PrintConsole("\t\t[  FAIL  ]",2);
 		AfxPostQuitMessage(0);
 		return FALSE;
 	}
+	PrintConsole("\t\t[  OK  ]",1);
 
+	PrintConsole("->SMQ Send Shared Memory");
 	if( !m_LoggerSendQueue.InitailizeMMF( MAX_PKTSIZE, MAX_COUNT, SMQ_LOGGERSEND ) ) {
-		AfxMessageBox("SMQ Send Shared Memory Initialize Fail");
+		PrintConsole("\t\t[  FAIL  ]",2);
 		AfxPostQuitMessage(0);
 		return FALSE;
 	}
+	PrintConsole("\t\t[  OK  ]",1);
+
+	PrintConsole("->SMQ Recv Shared Memory");
 	if( !m_LoggerRecvQueue.InitailizeMMF( MAX_PKTSIZE, MAX_COUNT, SMQ_LOGGERRECV ) ) {
-		AfxMessageBox("SMQ Recv Shared Memory Initialize Fail");
+		PrintConsole("\t\t[  FAIL  ]",2);
 		AfxPostQuitMessage(0);
 		return FALSE;
 	}
-
+	PrintConsole("\t\t[  OK  ]",1);
+	
+	PrintConsole("->SMQ ItemLog Shared Memory");
 	if( !m_ItemLoggerSendQ.InitailizeMMF( MAX_PKTSIZE, MAX_COUNT, SMQ_ITEMLOGGER ) ) {
-		AfxMessageBox("SMQ ItemLog Shared Memory Initialize Fail");
+		PrintConsole("\t\t[  FAIL  ]",2);
 		AfxPostQuitMessage(0);
 		return FALSE;
 	}
+	PrintConsole("\t\t[  OK  ]",1);
 
-	LogFileWrite("before item\r\n");
+	PrintConsole("->Item Table Loading...");
 	if( LoadItemTable() == FALSE ){
-		AfxMessageBox("ItemTable Load Fail");
+		PrintConsole("\t\t[  FAIL  ]",2);
 		AfxPostQuitMessage(0);
 		return FALSE;
 	}
-	LogFileWrite("before main\r\n");
+	PrintConsole("\t\t[  OK  ]",1);
+
+	PrintConsole("->MAGIC Table Loading...");
 	if( LoadMagicTable() == FALSE ){
-		AfxMessageBox("MagicTable Load Fail");
+		PrintConsole("\t\t[  FAIL  ]",2);
 		AfxPostQuitMessage(0);
 		return FALSE;
 	}
-	LogFileWrite("before 1\r\n");
+	PrintConsole("\t\t[  OK  ]",1);
+
+	/*LogFileWrite("before 1\r\n");
 	if( LoadMagicType1() == FALSE ) {
 		AfxMessageBox("MagicType1 Load Fail");
 		AfxPostQuitMessage(0);
@@ -416,7 +453,7 @@ BOOL CEbenezerDlg::OnInitDialog()
 		AfxMessageBox("MagicType8 Load Fail");
 		AfxPostQuitMessage(0);
 		return FALSE;
-	}
+	}*/ 
 	LogFileWrite("before Coeffi\r\n");
 	if( LoadCoefficientTable() == FALSE ){
 		AfxMessageBox("CharaterDataTable Load Fail");

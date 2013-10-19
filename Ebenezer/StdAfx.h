@@ -24,6 +24,10 @@
 #include <afxsock.h>		// MFC socket extensions
 #include <afxtempl.h>
 #include <afxdb.h>
+#include <windows.h>
+
+#include <stdio.h>
+#include <stdlib.h>
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.

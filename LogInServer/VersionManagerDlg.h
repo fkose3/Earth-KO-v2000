@@ -40,7 +40,8 @@ public:
 	char	m_ODBCLogin[32];
 	char	m_ODBCPwd[32];
 	char	m_TableName[32];
-
+	
+	char    m_News[3][120];
 	VersionInfoList		m_VersionList;
 	ServerInfoList		m_ServerList;
 	int		m_nServerCount;

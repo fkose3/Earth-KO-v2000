@@ -35,6 +35,10 @@ CVersionManagerDlg::CVersionManagerDlg(CWnd* pParent /*=NULL*/)
 	memset( m_ODBCLogin, NULL, 32 );
 	memset( m_ODBCPwd, NULL, 32 );
 	memset( m_TableName, NULL, 32 );
+	
+	memset( m_News[0], NULL, 120);
+	memset( m_News[1], NULL, 120);
+	memset( m_News[2], NULL, 120);
 
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -101,7 +105,7 @@ BOOL CVersionManagerDlg::OnInitDialog()
 
 	m_OutputList.AddString( strconnection );
 	CString version;
-	version.Format("Latest Version : %d", m_nLastVersion );
+	version.Format("Guncel Version : %d", m_nLastVersion );
 	m_OutputList.AddString( version );
 
 	::ResumeThread( m_Iocport.m_hAcceptThread );
@@ -114,7 +118,7 @@ BOOL CVersionManagerDlg::GetInfoFromIni()
 	int errorcode = 0;
 	CString errorstr, inipath;
 
-	inipath.Format( "%s\\Version.ini", GetProgPath() );
+	inipath.Format( "%s\\iniFiles\\Login.ini", GetProgPath() );
 	GetPrivateProfileString( "DOWNLOAD", "URL", "", m_strFtpUrl, 256, inipath );
 	GetPrivateProfileString( "DOWNLOAD", "PATH", "", m_strFilePath, 256, inipath );
 
@@ -123,6 +127,10 @@ BOOL CVersionManagerDlg::GetInfoFromIni()
 	GetPrivateProfileString( "ODBC", "PWD", "", m_ODBCPwd, 32, inipath );
 	GetPrivateProfileString( "ODBC", "TABLE", "", m_TableName, 32, inipath );
 	GetPrivateProfileString( "CONFIGURATION", "DEFAULT_PATH", "", m_strDefaultPath, 256, inipath );
+	
+	GetPrivateProfileString( "NEWS", "TITLE1", "", m_News[0], 32, inipath );
+	GetPrivateProfileString( "NEWS", "TITLE2", "", m_News[1], 32, inipath );
+	GetPrivateProfileString( "NEWS", "TITLE3", "", m_News[2], 32, inipath );
 
 	m_nServerCount = GetPrivateProfileInt( "SERVER_LIST", "COUNT", 0, inipath );
 
@@ -132,6 +140,11 @@ BOOL CVersionManagerDlg::GetInfoFromIni()
 	
 	char ipkey[20]; memset( ipkey, 0x00, 20 );
 	char namekey[20]; memset( namekey, 0x00, 20 );
+	char FreeKey[20]; memset( FreeKey, 0x00, 20 );
+	char PreKey[20]; memset( PreKey, 0x00, 20 );
+	char king[2][20]; memset( king[0], 0x00, 20); memset( king[1], 0x00, 20);
+	char KingMessage[2][20]; memset( KingMessage[0], 0x00, 20); memset( KingMessage[1], 0x00, 20);
+
 	_SERVER_INFO* pInfo = NULL;
 	
 	m_ServerList.reserve(20);
@@ -139,8 +152,25 @@ BOOL CVersionManagerDlg::GetInfoFromIni()
 		pInfo = new _SERVER_INFO;
 		sprintf( ipkey, "SERVER_%02d", i );
 		sprintf( namekey, "NAME_%02d", i );
+		sprintf( FreeKey, "FREELIMIT_%02d", i);
+		sprintf( PreKey, "PREMLIMIT_%02d", i);
+		sprintf( king[0], "KING1_%02d", i);
+		sprintf( king[1], "KING2_%02d", i);
+		sprintf( KingMessage[0], "KINGMSG1_%02d", i);
+		sprintf( KingMessage[1], "KINGMSG2_%02d", i);
+		
+		
 		GetPrivateProfileString( "SERVER_LIST", ipkey, "", pInfo->strServerIP, 32, inipath );
 		GetPrivateProfileString( "SERVER_LIST", namekey, "", pInfo->strServerName, 32, inipath );
+		pInfo->strFreelimit = GetPrivateProfileInt( "SERVER_LIST", FreeKey, 0, inipath );
+		pInfo->strPrelimit = GetPrivateProfileInt( "SERVER_LIST", PreKey, 0, inipath );
+		GetPrivateProfileString( "SERVER_LIST", king[0], "", pInfo->strKing1, 32 , inipath );
+		GetPrivateProfileString( "SERVER_LIST", king[1], "", pInfo->strKing2, 32 , inipath );
+		GetPrivateProfileString( "SERVER_LIST", KingMessage[0], "", pInfo->strMess1, 32 , inipath );
+		GetPrivateProfileString( "SERVER_LIST", KingMessage[1], "", pInfo->strMess2, 32 , inipath );
+		
+
+
 		m_ServerList.push_back( pInfo );
 	}
 
@@ -208,7 +238,7 @@ BOOL CVersionManagerDlg::DestroyWindow()
 void CVersionManagerDlg::OnVersionSetting() 
 {
 	CString errorstr, inipath;
-	inipath.Format( "%s\\Version.ini", GetProgPath() );
+	inipath.Format( "%s\\iniFiles\\Login.ini", GetProgPath() );
 	CSettingDlg	setdlg(m_nLastVersion, this);
 	
 	strcpy( setdlg.m_strDefaultPath, m_strDefaultPath );

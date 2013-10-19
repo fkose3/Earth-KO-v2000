@@ -54,6 +54,7 @@ class CEbenezerDlg : public CDialog
 {
 // Construction
 public:	
+	void PrintConsole( char* buf, WORD color=0);
 	void WriteEventLog( char* pBuf );
 	void FlySanta();
 	void BattleZoneCurrentUsers();

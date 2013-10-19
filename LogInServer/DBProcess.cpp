@@ -82,10 +82,10 @@ BOOL CDBProcess::LoadVersionList()
 	memset(szSQL, 0x00, 1024);
 	wsprintf(szSQL, TEXT("select * from %s"), m_pMain->m_TableName);
 	
-	SQLSMALLINT	version = 0, historyversion = 0;
-	TCHAR strfilename[256], strcompname[256];
+	SQLSMALLINT	sversion = 0, shistoryversion = 0;
+	TCHAR strfilename[256], compname[256];
 	memset( strfilename, NULL, 256 );
-	memset( strcompname, NULL, 256 );
+	memset( compname, NULL, 256 );
 	SQLINTEGER Indexind = SQL_NTS;
 
 	retcode = SQLAllocHandle( (SQLSMALLINT)SQL_HANDLE_STMT, m_VersionDB.m_hdbc, &hstmt );
@@ -106,20 +106,20 @@ BOOL CDBProcess::LoadVersionList()
 	while (retcode == SQL_SUCCESS|| retcode == SQL_SUCCESS_WITH_INFO) {
 		retcode = SQLFetch(hstmt);
 		if (retcode == SQL_SUCCESS || retcode == SQL_SUCCESS_WITH_INFO){
-			SQLGetData(hstmt,1 ,SQL_C_SSHORT  , &version,   0, &Indexind);
+			SQLGetData(hstmt,1 ,SQL_C_SSHORT  , &sversion,   0, &Indexind);
 			SQLGetData(hstmt,2 ,SQL_C_CHAR  ,strfilename, 256, &Indexind);
-			SQLGetData(hstmt,3 ,SQL_C_CHAR  ,strcompname, 256, &Indexind);
-			SQLGetData(hstmt,4 ,SQL_C_SSHORT  , &historyversion,   0, &Indexind);
+			SQLGetData(hstmt,3 ,SQL_C_CHAR  ,compname, 256, &Indexind);
+			SQLGetData(hstmt,4 ,SQL_C_SSHORT  , &shistoryversion,   0, &Indexind);
 
 			_VERSION_INFO* pInfo = new _VERSION_INFO;
 			
-			tempfilename = strfilename;	tempcompname = strcompname;
+			tempfilename = strfilename;	tempcompname = compname;
 			tempfilename.TrimRight(); tempcompname.TrimRight();
 
-			pInfo->sVersion = version;
+			pInfo->sVersion = sversion;
 			pInfo->strFileName = tempfilename;
 			pInfo->strCompName = tempcompname;
-			pInfo->sHistoryVersion = historyversion;
+			pInfo->sHistoryVersion = shistoryversion;
 
 			if( !m_pMain->m_VersionList.PutData( pInfo->strFileName, pInfo ) ) {
 				TRACE("VersionInfo PutData Fail - %d\n", pInfo->strFileName );
@@ -149,11 +149,11 @@ int CDBProcess::AccountLogin(const char *id, const char *pwd)
 	SQLRETURN		retcode;
 	TCHAR			szSQL[1024];
 	memset( szSQL, 0x00, 1024 );
-	SQLSMALLINT		sParmRet = 3;
+	SQLSMALLINT		sParmRet = 2;
 	SQLINTEGER		cbParmRet=SQL_NTS;
 
-	wsprintf( szSQL, TEXT( "{call ACCOUNT_LOGIN(\'%s\',\'%s\',?)}" ), id, pwd);
-
+	wsprintf( szSQL, TEXT( "{call MAIN_LOGIN(\'%s\',\'%s\',?)}" ), id, pwd);
+	
 	retcode = SQLAllocHandle( (SQLSMALLINT)SQL_HANDLE_STMT, m_VersionDB.m_hdbc, &hstmt );
 	if (retcode == SQL_SUCCESS)
 	{
@@ -174,7 +174,7 @@ int CDBProcess::AccountLogin(const char *id, const char *pwd)
 
 		SQLFreeHandle((SQLSMALLINT)SQL_HANDLE_STMT,hstmt);
 	}
-	
+	TRACE("Nrt : %d\r\n",sParmRet);
 	return sParmRet;
 }
 

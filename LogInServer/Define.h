@@ -67,10 +67,29 @@ struct _SERVER_INFO
 	char strServerIP[20];
 	char strServerName[20];
 	short	sUserCount;
+	short strFreelimit;
+	short strPrelimit;
+	char strKing1[20];
+	char strKing2[20];
+	char strMess1[100];
+	char strMess2[100];
+	char strNews1[120];
+	char strNews2[120];
+	char strNews3[120];
+
 	_SERVER_INFO() {
 		memset(strServerIP, 0x00, 20);
 		memset(strServerName, 0x00, 20);
+		memset(strKing1, 0x00, 20);
+		memset(strKing2, 0x00, 20);
+		memset(strMess1, 0x00, 100);
+		memset(strMess2, 0x00, 100);
+		memset(strNews1, 0x00, 120);
+		memset(strNews2, 0x00, 120);
+		memset(strNews3, 0x00, 120);
 		sUserCount = 0;
+		strFreelimit = 10;
+		strPrelimit = 20;
 	};
 };
 
@@ -82,6 +101,8 @@ struct _SERVER_INFO
 #define LS_LOGIN_REQ				0xF3
 #define LS_MGAME_LOGIN				0xF4
 #define LS_SERVERLIST				0xF5
+#define LS_NEWS						0xF6
+#define LS_UNK						0xF7
 
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////

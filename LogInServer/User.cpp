@@ -48,24 +48,50 @@ void CUser::Parsing(int len, char *pData)
 	int index = 0, send_index = 0, i=0, client_version = 0;
 	char buff[2048]; memset( buff, 0x00, 2048 );
 	BYTE command = GetByte( pData, index );
-
+	
 	switch( command ) {
 	case LS_VERSION_REQ:
 		SetByte( buff, LS_VERSION_REQ, send_index );
 		SetShort( buff, m_pMain->m_nLastVersion, send_index );
 		Send( buff, send_index );
 		break;
+	case 0xF2:
+		SetByte( buff, 0xF2, send_index );
+		SetDWORD( buff, 0, send_index );
+		Send( buff, send_index );
+		break;
 	case LS_SERVERLIST:
 		m_pMain->m_DBProcess.LoadUserCountList();		// 기범이가 ^^;
 		SetByte( buff, LS_SERVERLIST, send_index );
+		SetShort( buff, GetShort(pData , index), send_index);
 		SetByte( buff, m_pMain->m_nServerCount, send_index );
+		SetShort( buff, 0, send_index);
 		for(i=0; i<m_pMain->m_ServerList.size(); i++) {		
 			SetShort( buff, strlen(m_pMain->m_ServerList[i]->strServerIP), send_index );
 			SetString( buff, m_pMain->m_ServerList[i]->strServerIP, strlen(m_pMain->m_ServerList[i]->strServerIP), send_index );
 			SetShort( buff, strlen(m_pMain->m_ServerList[i]->strServerName), send_index );
 			SetString( buff, m_pMain->m_ServerList[i]->strServerName, strlen( m_pMain->m_ServerList[i]->strServerName ), send_index );			
-			SetShort( buff, m_pMain->m_ServerList[i]->sUserCount, send_index);   // 기범이가 ^^;
+			SetShort( buff, m_pMain->m_ServerList[i]->sUserCount, send_index);   // 기범이가 ^^;	
+			
+			SetShort( buff, 1, send_index);
+			SetShort( buff, 1, send_index);
+			SetShort( buff, m_pMain->m_ServerList[i]->strPrelimit, send_index);
+			SetShort( buff, m_pMain->m_ServerList[i]->strFreelimit, send_index);
+			SetByte( buff, 0, send_index );
+			
+			SetShort( buff, strlen(m_pMain->m_ServerList[i]->strKing1), send_index);
+			SetString( buff, m_pMain->m_ServerList[i]->strKing1, strlen(m_pMain->m_ServerList[i]->strKing1), send_index);
+
+			SetShort( buff, strlen(m_pMain->m_ServerList[i]->strMess1), send_index);
+			SetString( buff, m_pMain->m_ServerList[i]->strMess1, strlen(m_pMain->m_ServerList[i]->strMess1), send_index);
+
+			SetShort( buff, strlen(m_pMain->m_ServerList[i]->strKing2), send_index);
+			SetString( buff, m_pMain->m_ServerList[i]->strKing2, strlen(m_pMain->m_ServerList[i]->strKing2), send_index);
+
+			SetShort( buff, strlen(m_pMain->m_ServerList[i]->strMess2), send_index);
+			SetString( buff, m_pMain->m_ServerList[i]->strMess2, strlen(m_pMain->m_ServerList[i]->strMess2), send_index);
 		}
+
 		Send( buff, send_index );
 		break;
 	case LS_DOWNLOADINFO_REQ:
@@ -77,6 +103,39 @@ void CUser::Parsing(int len, char *pData)
 		break;
 	case LS_MGAME_LOGIN:
 		MgameLogin( pData+index );
+		break;
+	case LS_NEWS:
+		SetShort( buff, LS_NEWS, send_index);
+		
+		if(!strlen(m_pMain->m_News[0]) && !strlen(m_pMain->m_News[1]) && !strlen(m_pMain->m_News[2]))
+		{
+			SetShort( buff, strlen("Login Notice"), send_index);
+			SetString( buff, "Login Notice", strlen("Login Notice"), send_index);
+			SetShort( buff, strlen("<empty>"), index);
+			SetString( buff, "<empty>", strlen("<empty>"), send_index);
+		}
+		else
+		{
+			int NewsCount = 0;
+			if(m_pMain->m_News[0]) 
+				NewsCount++;
+			if(m_pMain->m_News[1])
+				NewsCount++;
+			if(m_pMain->m_News[2])
+				NewsCount++;
+			
+			SetShort( buff, strlen("Login Notice"), send_index);
+			SetString( buff, "Login Notice", strlen("Login Notice"), send_index);
+			SetShort( buff, NewsCount, send_index);
+
+			for(int i=0; i<3; i++)
+			{
+				SetByte( buff, strlen(m_pMain->m_News[i]), send_index);
+				SetString( buff, m_pMain->m_News[i], strlen(m_pMain->m_News[i]), send_index);
+			}
+			
+		}
+		Send(buff,send_index);
 		break;
 	}
 }
@@ -115,6 +174,17 @@ void CUser::LogInReq(char *pBuf)
 	}
 	else 
 		SetByte( send_buff, result, send_index );
+
+
+
+	if( result == 1)
+	{
+		SetByte( send_buff, -1, send_index );
+		SetByte( send_buff, -1, send_index );
+		SetShort( send_buff, idlen, send_index );
+		SetString( send_buff, accountid, idlen, send_index);
+	}
+
 	Send( send_buff, send_index );
 
 	return;
